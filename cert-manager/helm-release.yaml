@@ -8,3 +8,4 @@ spec:
   chart:
     git: https://charts.jetstack.io/cert-manager
     ref: v0.13.0
+    path: charts/jetstack/cert-manager
