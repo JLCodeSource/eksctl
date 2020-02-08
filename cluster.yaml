@@ -2,34 +2,26 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eksctl-test
+  name: eksctl-test-rabbit
   region: us-west-2
 
 vpc:
   cidr: 172.20.0.0/16
 
-managedNodeGroups:
+nodeGroups:
   - name: ng-1-frontend
     labels: { role: workers }
     instanceType: t3a.small
     minSize: 2
     desiredCapacity: 3
     maxSize: 3
-    availabilityZones: ["us-west-2a", "us-west-2b", "us-west-2c"]
     privateNetworking: false
     volumeSize: 10
-    tags:
-      - nodegroup-role: worker
-      - environment: frontend
   - name: ng-2-backend
     labels: { role: workers }
     instanceType: t3a.large
     minSize: 2
     desiredCapacity: 3
     maxSize: 3
-    availabilityZones: ["us-west-2a", "us-west-2b", "us-west-2c"]
     privateNetworking: true
     volumeSize: 30
-    tags:
-      - nodegroup-role: worker
-      - environment: backend
