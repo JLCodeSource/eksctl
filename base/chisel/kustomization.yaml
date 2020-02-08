@@ -1,0 +1,7 @@
+configMapGenerator:
+- name: chisel-config
+  literals:
+  - chisel.type="server"
+  - chisel.port="8443"
+  - chisel.proxy="https://remote01.tf.com"
+
