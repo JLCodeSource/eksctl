@@ -9,15 +9,7 @@ vpc:
   cidr: 172.20.0.0/16
 
 nodeGroups:
-  - name: ng-1-frontend
-    labels: { role: workers }
-    instanceType: t3a.small
-    minSize: 2
-    desiredCapacity: 3
-    maxSize: 3
-    privateNetworking: false
-    volumeSize: 10
-  - name: ng-2-backend
+  - name: ng-1-backend
     labels: { role: workers }
     instanceType: t3a.large
     minSize: 2
