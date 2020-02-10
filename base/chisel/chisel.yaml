@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chisel
+  namespace: chisel
+spec:
+  ports:
+  - port: 80
+    targetPort: 8443
+  selector:
+    app: chisel
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chisel
+  namespace: chisel
+spec:
+  selector:
+    matchLabels:
+      app: chisel
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: chisel
+    spec:
+      containers:
+      - name: chisel
+        image: jpillora/chisel
+        env:
+          - name: TYPE
+            valueFrom:
+              configMapKeyRef:
+                name: chisel-config-mbh82ht967
+                key: chisel.type
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: chisel-config-mbh82ht967
+                key: chisel.port
+          - name: PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: chisel-config-mbh82ht967
+                key: chisel.proxy
+        command: ["/app/chisel", "$(TYPE)", "-v", "-p", "$(PORT)", "--proxy", "$(PROXY)", "--socks5"]
+        ports:
+        - containerPort: 8443
+

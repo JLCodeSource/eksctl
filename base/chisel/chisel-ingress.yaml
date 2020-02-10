@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: chisel-ingress
+  namespace: chisel
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  tls:
+  - hosts:
+    - remote.tf-support.com
+    secretName: remote-tf-support-tls
+  rules:
+  - host: remote.tf-support.com
+    http:
+      paths:
+      - path: /tunnel
+        backend:
+          serviceName: chisel
+          servicePort: 80
+      - path: /*
+        backend:
+          serviceName: default-http-backend
+          servicePort: 80
